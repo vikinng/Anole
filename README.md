@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # anole
 
 > A Vue.js project
