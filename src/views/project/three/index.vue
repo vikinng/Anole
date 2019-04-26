@@ -56,7 +56,7 @@ export default {
 
       let geometry = new Three.BoxGeometry(260, 1, 130)
 
-      let texture = new Three.ImageUtils.loadTexture('/static/floor.jpg')
+      let texture = new Three.ImageUtils.loadTexture('./static/floor.jpg')
       texture.wrapS = texture.wrapT = Three.RepeatWrapping
       texture.repeat.set(14, 14)
       let material = new Three.MeshPhongMaterial()
@@ -69,39 +69,39 @@ export default {
       // 机架
       let geometry2 = new Three.BoxGeometry(10, 28, 10)
       let framFace = []
-      let texture2 = new Three.ImageUtils.loadTexture('/static/fram_front.jpg')
+      let texture2 = new Three.ImageUtils.loadTexture('./static/fram_front.jpg')
       let material2 = new Three.MeshBasicMaterial()
       material2.map = texture2
 
-      let texture3 = new Three.ImageUtils.loadTexture('/static/timg.jpg')
-      let material3 = new Three.MeshBasicMaterial()
-      material3.map = texture3
+      // let texture3 = new Three.ImageUtils.loadTexture('./static/timg.jpg')
+      // let material3 = new Three.MeshBasicMaterial()
+      // material3.map = texture3
 
       framFace.push(
         new Three.MeshBasicMaterial({
-          map: new Three.ImageUtils.loadTexture('/static/fram_side.jpg')
+          map: new Three.ImageUtils.loadTexture('./static/fram_side.jpg')
         })
       )
       framFace.push(
         new Three.MeshBasicMaterial({
-          map: new Three.ImageUtils.loadTexture('/static/fram_side.jpg')
+          map: new Three.ImageUtils.loadTexture('./static/fram_side.jpg')
         })
       )
       framFace.push(new Three.MeshPhongMaterial({ color: '#494949' }))
       framFace.push(
         new Three.MeshBasicMaterial({
-          map: new Three.ImageUtils.loadTexture('/static/fram_side.jpg')
+          map: new Three.ImageUtils.loadTexture('./static/fram_side.jpg')
         })
       )
 
       framFace.push(
         new Three.MeshBasicMaterial({
-          map: new Three.ImageUtils.loadTexture('/static/fram_front.jpg')
+          map: new Three.ImageUtils.loadTexture('./static/fram_front.jpg')
         })
       )
       framFace.push(
         new Three.MeshBasicMaterial({
-          map: new Three.ImageUtils.loadTexture('/static/fram_side.jpg')
+          map: new Three.ImageUtils.loadTexture('./static/fram_side.jpg')
         })
       )
       this.mesh2 = new Three.Mesh(geometry2, framFace)
