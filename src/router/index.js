@@ -37,6 +37,11 @@ export const myRouterMap = [
         component: () => import('@/views/project/three'),
         name: 'threeDemo',
         meta: { title: 'threeDemo', icon: 'dashboard', noCache: true }
+      }, {
+        path: 'socket',
+        component: () => import('@/views/project/socket'),
+        name: 'socket',
+        meta: { title: 'socket', icon: 'dashboard', noCache: true }
       }
     ]
   }
