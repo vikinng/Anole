@@ -27,7 +27,6 @@ export default {
   overflow: hidden;
 }
 .box_wrapper {
-  border: 1px solid green;
   height: 89vh;
   overflow: auto;
   padding-bottom: 18px;

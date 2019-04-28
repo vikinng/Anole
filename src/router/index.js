@@ -42,6 +42,11 @@ export const myRouterMap = [
         component: () => import('@/views/project/socket'),
         name: 'socket',
         meta: { title: 'socket', icon: 'dashboard', noCache: true }
+      }, {
+        path: 'Sudoku',
+        component: () => import('@/views/project/Sudoku'),
+        name: 'Sudoku',
+        meta: { title: 'Sudoku', icon: 'dashboard', noCache: true }
       }
     ]
   }

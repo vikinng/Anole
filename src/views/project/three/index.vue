@@ -7,6 +7,7 @@
 <script>
 import * as Three from 'three'
 import OrbitControls from 'three-orbitcontrols'
+/* eslint-disable */
 export default {
   name: 'threeDemo',
   data() {
@@ -129,7 +130,7 @@ export default {
 
 <style scoped>
 .index_container {
-  height: 280px;
+  height: 264px;
 }
 .inner_container {
   height: 700px;
