@@ -124,6 +124,7 @@ export default {
   height: 500px;
   margin: 0 auto;
   position: relative;
+
   top: 100px;
   .sudo_box {
     width: 100%;
@@ -131,28 +132,71 @@ export default {
     tr {
       width: 100%;
       height: 55px;
+      border-left: 3px solid #000;
+      border-right: 3px solid #000;
       td {
         height: 55px;
-        border: 1px solid #000;
+        border: 1px solid rgb(100, 99, 99);
       }
+    }
+
+    tr:nth-child(1) {
+      border-top: 3px solid #000;
+    }
+    tr:nth-child(3) {
+      border-bottom: 3px solid #000;
+    }
+    tr:nth-child(6) {
+      border-bottom: 3px solid #000;
+    }
+    tr:nth-child(9) {
+      border-bottom: 3px solid #000;
+    }
+    tr td:nth-child(3) {
+      border-right: 3px solid #000;
+    }
+    tr td:nth-child(6) {
+      border-right: 3px solid #000;
     }
   }
 }
 .sm_box {
-  width: 276px;
-  height: 276px;
+  width: 270px;
+  height: 270px;
   margin: 0 auto;
-  padding: 15px;
+  padding-top: 8px;
   .sudo_box {
     width: 100%;
     border-collapse: collapse;
     tr {
       width: 100%;
       height: 26px;
+      border-left: 2px solid #000;
+      border-right: 2px solid #000;
       td {
+        width: 26px;
         height: 26px;
-        border: 1px solid #000;
+        border: 1px solid rgb(100, 99, 99);
       }
+    }
+
+    tr:nth-child(1) {
+      border-top: 2px solid #000;
+    }
+    tr:nth-child(3) {
+      border-bottom: 2px solid #000;
+    }
+    tr:nth-child(6) {
+      border-bottom: 2px solid #000;
+    }
+    tr:nth-child(9) {
+      border-bottom: 2px solid #000;
+    }
+    tr td:nth-child(3) {
+      border-right: 2px solid #000;
+    }
+    tr td:nth-child(6) {
+      border-right: 2px solid #000;
     }
   }
 }

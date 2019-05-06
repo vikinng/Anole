@@ -35,9 +35,13 @@
         </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="6">
-        <div class="Box" @click="linkTo('/workspace/Sudoku')">
-          <div class="cont_img">
-            <Sudoku></Sudoku>
+        <div class="Box" @click="linkTo('/workspace/Sudoku')" @mouseenter="cont_class4='cont_text_hover'">
+          <div class="cont_img" @mouseenter="show4=true">
+            <Sudoku v-if="show4"></Sudoku>
+          </div>
+          <div :class="cont_class4">
+            <span class="cont_title">解数独</span>
+            <span class="cont_info">2019/4/28</span>
           </div>
         </div>
       </el-col>
@@ -104,9 +108,11 @@ export default {
       cont_class1: 'cont_text',
       cont_class2: 'cont_text',
       cont_class3: 'cont_text',
+      cont_class4: 'cont_text',
       show1: false,
       show2: false,
-      show3: false
+      show3: false,
+      show4: false
     }
   },
   methods: {
