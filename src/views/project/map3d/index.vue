@@ -1,5 +1,5 @@
 <template>
-  <div class="map_content">
+  <div :class="map_class">
     <div id="map"></div>
   </div>
 </template>
@@ -11,6 +11,18 @@ import map3D from 'echarts-gl'
 import 'echarts/map/js/province/shandong.js'
 export default {
   name: 'map3d',
+  data() {
+    return {
+      map_class: 'map_content'
+    }
+  },
+  created() {
+    if (this.$route.path === '/workspace/index') {
+      this.map_class = 'sm_map'
+    } else {
+      this.map_class = 'map_content'
+    }
+  },
   mounted() {
     this.init()
   },
@@ -172,14 +184,23 @@ export default {
 }
 </script>
 
-<style scoprd>
+<style scoprd lang="scss">
 .map_content {
   width: 1200px;
   margin: 0 auto;
+  #map {
+    width: 1200px;
+    height: 800px;
+    margin-top: 40px;
+  }
 }
-#map {
-  width: 1200px;
-  height: 800px;
-  margin-top: 40px;
+.sm_map {
+  width: 400px;
+  margin: 0 auto;
+  #map {
+    width: 400px;
+    height: 260px;
+    margin-top: 6px;
+  }
 }
 </style>
