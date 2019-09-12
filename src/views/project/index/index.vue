@@ -48,7 +48,15 @@
     </el-row>
     <el-row :gutter="50">
       <el-col :xs="24" :sm="24" :lg="6">
-        <div class="Box">111</div>
+        <div class="Box" @click="linkTo('/workspace/map3d')" @mouseenter="cont_class5='cont_text_hover'">
+          <div class="cont_img" @mouseenter="show5=true">
+            <map3d v-if="show5"></map3d>
+          </div>
+          <div :class="cont_class5">
+            <span class="cont_title">3维地图</span>
+            <span class="cont_info">2019/9/12</span>
+          </div>
+        </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="6">
         <div class="Box">222</div>
@@ -95,13 +103,19 @@ const threeDemo = Vue.component('threeDemo', function(resolve) {
     require(['../three'], resolve)
   }, 100)
 })
+const map3d = Vue.component('map3d', function(resolve) {
+  setTimeout(function() {
+    require(['../map3d'], resolve)
+  }, 100)
+})
 export default {
   name: 'Content',
   components: {
     lottie,
     canvasDemo,
     threeDemo,
-    Sudoku
+    Sudoku,
+    map3d
   },
   data() {
     return {
@@ -109,10 +123,12 @@ export default {
       cont_class2: 'cont_text',
       cont_class3: 'cont_text',
       cont_class4: 'cont_text',
+      cont_class5: 'cont_text',
       show1: false,
       show2: false,
       show3: false,
-      show4: false
+      show4: false,
+      show5: false
     }
   },
   methods: {

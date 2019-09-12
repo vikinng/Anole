@@ -11,6 +11,12 @@
           </el-row>
         </div>
         <div class="sent_view">
+          <!-- <div class="tool_menu">
+            <span @click="showEmoji=!showEmoji">表情</span>
+            <div class="emoji-box" v-if="showEmoji">
+              <Emoji @select="selectEmoji"></Emoji>
+            </div>
+          </div>-->
           <input type="textarea" class="sent_input" v-model="Mes" @keyup.enter="send">
           <el-button type="primary" style="float:right;margin:5px;" @click="send">发送</el-button>
         </div>
@@ -21,15 +27,21 @@
 
 <script>
 import io from 'socket.io-client'
+import Emoji from '../emoji'
+import { emoji } from '@/utils/emoji.js'
 export default {
   name: 'NetList',
+  components: {
+    Emoji
+  },
   data() {
     return {
       Mes: '',
       Res: '',
       itemArr: [],
       socket: io('http://172.100.30.225:3000'),
-      messageList: []
+      messageList: [],
+      showEmoji: false
     }
   },
   mounted() {
@@ -71,6 +83,12 @@ export default {
           chart_view.scrollTop = chart_view.scrollHeight
         })
       }
+    },
+    selectEmoji(code) {
+      this.showEmoji = false
+      this.Mes += code
+      this.Mes = emoji(this.Mes)
+      console.log(this.Mes)
     }
   }
 }
@@ -137,5 +155,14 @@ export default {
   background: #00b9a7;
   line-height: 30px;
   border-radius: 5px;
+}
+.tool_menu {
+  width: 596px;
+  height: 30px;
+  border: 1px solid red;
+  .emoji-box {
+    margin-top: -340px;
+    margin-left: -140px;
+  }
 }
 </style>

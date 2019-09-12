@@ -47,6 +47,21 @@ export const myRouterMap = [
         component: () => import('@/views/project/Sudoku'),
         name: 'Sudoku',
         meta: { title: 'Sudoku', icon: 'dashboard', noCache: true }
+      }, {
+        path: 'emoji',
+        component: () => import('@/views/project/emoji'),
+        name: 'emoji',
+        meta: { title: 'emoji', icon: 'dashboard', noCache: true }
+      }, {
+        path: 'reader',
+        component: () => import('@/views/project/reader'),
+        name: 'reader',
+        meta: { title: 'reader', icon: 'dashboard', noCache: true }
+      }, {
+        path: 'map3d',
+        component: () => import('@/views/project/map3d'),
+        name: 'map3d',
+        meta: { title: 'map3d', icon: 'dashboard', noCache: true }
       }
     ]
   }
