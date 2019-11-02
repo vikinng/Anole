@@ -27,14 +27,14 @@ export default {
   overflow: hidden;
 }
 .box_wrapper {
-  height: 89vh;
+  height: 100vh;
   overflow: auto;
-  padding-bottom: 18px;
+  padding-bottom: 0;
   background: #f4f4f4;
 }
 .box_wrapper::-webkit-scrollbar {
-  width: 8px;
-  height: 9px;
+  width: 4px;
+  height: 8px;
   background-color: #f2f2f2;
 }
 .box_wrapper::-webkit-scrollbar-thumb {

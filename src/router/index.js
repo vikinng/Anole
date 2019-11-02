@@ -62,6 +62,11 @@ export const myRouterMap = [
         component: () => import('@/views/project/map3d'),
         name: 'map3d',
         meta: { title: 'map3d', icon: 'dashboard', noCache: true }
+      }, {
+        path: 'dataView',
+        component: () => import('@/views/project/dataView'),
+        name: 'dataView',
+        meta: { title: 'dataView', icon: 'dashboard', noCache: true }
       }
     ]
   }
