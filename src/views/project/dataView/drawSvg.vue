@@ -1,12 +1,15 @@
 <template>
   <div>
     <div class="content">
-      <div class="wrapper">
+      <div>
+        <input class="in_button" v-if="txtShow" autofocus="autofocus" v-model="txt" @keyup.enter="change">
+      </div>
+      <div class="wrapper" @mousedown="change">
         <svg width="100%" height="100%">
-          <text text-anchor="middle" x="50%" y="50%" class="text text-1">TopWay</text>
-          <text text-anchor="middle" x="50%" y="50%" class="text text-2">TopWay</text>
-          <text text-anchor="middle" x="50%" y="50%" class="text text-3">TopWay</text>
-          <text text-anchor="middle" x="50%" y="50%" class="text text-4">TopWay</text>
+          <text text-anchor="middle" x="50%" y="50%" class="text text-1">{{txt}}</text>
+          <text text-anchor="middle" x="50%" y="50%" class="text text-2">{{txt}}</text>
+          <text text-anchor="middle" x="50%" y="50%" class="text text-3">{{txt}}</text>
+          <text text-anchor="middle" x="50%" y="50%" class="text text-4">{{txt}}</text>
         </svg>
       </div>
     </div>
@@ -15,7 +18,18 @@
 
 <script>
 export default {
-  name: 'dataView'
+  name: 'dataView',
+  data() {
+    return {
+      txt: 'TopWay',
+      txtShow: false
+    }
+  },
+  methods: {
+    change() {
+      this.txtShow = !this.txtShow
+    }
+  }
 }
 </script>
 
@@ -27,6 +41,16 @@ export default {
 }
 .wrapper {
   height: 90vh;
+}
+.in_button {
+  outline-style: none;
+  background: #182430;
+  border: 1px solid #182430;
+  border-bottom: 1px solid #fff;
+  padding: 14px 14px;
+  width: 620px;
+  color: #fff;
+  font-size: 88px;
 }
 .text {
   font-size: 110px;

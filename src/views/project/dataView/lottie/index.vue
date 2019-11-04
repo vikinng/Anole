@@ -1,6 +1,8 @@
 <template>
-  <div id="app_lottie" @mousedown="link">
-    <lottie :options="defaultOptions" :height="height" :width="width" v-on:animCreated="handleAnimation"/>
+  <div id="app_lottie">
+    <div @mousedown="link">
+      <lottie :options="defaultOptions" :height="height" :width="width" v-on:animCreated="handleAnimation"/>
+    </div>
     <div v-if="detailShow">
       <div>
         <p>Speed: x{{animationSpeed}}</p>

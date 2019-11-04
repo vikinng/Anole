@@ -11,6 +11,9 @@
         <drawEchart></drawEchart>
       </el-carousel-item>
       <el-carousel-item>
+        <drawEcharts></drawEcharts>
+      </el-carousel-item>
+      <el-carousel-item>
         <lottie></lottie>
       </el-carousel-item>
     </el-carousel>
@@ -21,6 +24,7 @@
 import drawSvg from './drawSvg'
 import drawCanvas from './drawCanvas'
 import drawEchart from './drawEchart'
+import drawEcharts from './drawEcharts'
 import lottie from './lottie'
 export default {
   name: 'dataView',
@@ -28,6 +32,7 @@ export default {
     drawSvg,
     drawCanvas,
     drawEchart,
+    drawEcharts,
     lottie
   },
   data() {
