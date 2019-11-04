@@ -14,7 +14,7 @@
       </el-col>
       <el-col :xs="24" :sm="24" :lg="6">
         <div class="Box" @click="linkTo('/workspace/canvasDemo')" @mouseenter="cont_class2='cont_text_hover'">
-          <div class="cont_img" @mouseenter="show2=true">
+          <div class="cont_img">
             <canvasDemo v-if="show2"></canvasDemo>
           </div>
           <div :class="cont_class2">
