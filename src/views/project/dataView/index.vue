@@ -2,6 +2,9 @@
   <div>
     <el-carousel arrow="always" :height="'880px'" :autoplay="autoplay" :loop="autoplay">
       <el-carousel-item>
+        <brief></brief>
+      </el-carousel-item>
+      <el-carousel-item>
         <drawSvg></drawSvg>
       </el-carousel-item>
       <el-carousel-item>
@@ -21,6 +24,7 @@
 </template>
 
 <script>
+import brief from './brief'
 import drawSvg from './drawSvg'
 import drawCanvas from './drawCanvas'
 import drawEchart from './drawEchart'
@@ -29,6 +33,7 @@ import lottie from './lottie'
 export default {
   name: 'dataView',
   components: {
+    brief,
     drawSvg,
     drawCanvas,
     drawEchart,

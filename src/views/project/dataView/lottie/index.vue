@@ -17,7 +17,7 @@
 
 <script>
 import Lottie from './lottie.vue'
-import * as animationData from '@/assets/lottie/chart.json'
+import * as animationData from '@/assets/lottie/battery.json'
 export default {
   name: 'app',
   components: {
@@ -73,7 +73,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background: #fff;
+  background: #182430;
   padding-top: 200px;
   height: 100vh;
 }

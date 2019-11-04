@@ -67,6 +67,11 @@ export const myRouterMap = [
         component: () => import('@/views/project/dataView'),
         name: 'dataView',
         meta: { title: 'dataView', icon: 'dashboard', noCache: true }
+      }, {
+        path: 'largeMap',
+        component: () => import('@/views/project/dataView/largeMap'),
+        name: 'largeMap',
+        meta: { title: 'lagrgeMap', icon: 'dashboard', noCache: true }
       }
     ]
   }

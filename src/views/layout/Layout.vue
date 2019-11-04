@@ -1,6 +1,6 @@
 <template>
   <div class="app_wrapper">
-    <navbar></navbar>
+    <navbar v-if="show"></navbar>
     <div class="box_wrapper">
       <AppMain></AppMain>
     </div>
@@ -12,9 +12,21 @@ import Navbar from './Navbar'
 import AppMain from './AppMain'
 export default {
   name: 'layout',
+  data() {
+    return {
+      show: true
+    }
+  },
   components: {
     Navbar,
     AppMain
+  },
+  created() {
+    if (this.$route.path === '/workspace/largeMap') {
+      this.show = false
+    } else {
+      this.show = true
+    }
   }
 }
 </script>
