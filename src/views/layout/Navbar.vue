@@ -9,6 +9,8 @@
                 <img style="width:126px;" src="@/assets/anole.png">
               </div>
             </el-col>
+
+            <div class="git_address" style="color:#fff;float:right;" @click="linkToGit">https://github.com/vikinng/Anole.git</div>
           </el-row>
         </div>
       </el-col>
@@ -24,6 +26,9 @@ export default {
       this.$router.push({
         path: '/workspace/index'
       })
+    },
+    linkToGit() {
+      window.open('https://github.com/vikinng/Anole.git', '_blank')
     }
   }
 }
@@ -37,5 +42,13 @@ export default {
 }
 .nav_icon {
   cursor: pointer;
+}
+.git_address {
+  color: #fff;
+  float: right;
+  cursor: pointer;
+  font-size: 26px;
+  margin-top: 12px;
+  margin-right: 12px;
 }
 </style>
