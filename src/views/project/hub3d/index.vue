@@ -26,7 +26,7 @@
             <el-row>
               <el-col :xs="12" :sm="12" :lg="12">
                 <div class="add_obj" @click="creatEl('机架')">
-                  <img style="width:30px;" src="/static/机架.jpg">
+                  <img style="width:37px;" src="/static/机架.jpg">
                   <div>机架</div>
                 </div>
               </el-col>
@@ -41,8 +41,8 @@
           <el-collapse-item title="电源组件" name="3">
             <el-row>
               <el-col :xs="12" :sm="12" :lg="12">
-                <div class="add_obj" @click="creatEl('UPS标准件F')">
-                  <img style="width:30px;" src="/static/UPS.jpg">
+                <div class="add_obj" @click="creatEl('UPS标准件')">
+                  <img style="width:30px;" src="/static/UPS2.jpg">
                   <div>UPS标准件</div>
                 </div>
               </el-col>
@@ -68,9 +68,9 @@
           <el-collapse-item title="视频组件" name="6">
             <el-row>
               <el-col :xs="12" :sm="12" :lg="12">
-                <div class="add_obj" @click="creatEl('摄像头（球机）')">
+                <div class="add_obj" @click="creatEl('摄像头球机')">
                   <img style="width:30px;" src="/static/半球机.jpg">
-                  <div>摄像头（球机）</div>
+                  <div>摄像头球机</div>
                 </div>
               </el-col>
               <el-col :xs="12" :sm="12" :lg="12"></el-col>
@@ -171,7 +171,20 @@ export default {
       objects: [],
       groupData: [],
       datGui: '',
-      obj_arry: [1]
+      obj_arry: {
+        机架: 1,
+        数据柜: 1,
+        UPS标准件: 1,
+        精密空调: 1,
+        普通空调: 1,
+        摄像头球机: 1,
+        配电柜: 1,
+        配电箱: 1,
+        温湿度传感器: 1,
+        漏水控制器: 1,
+        烟感传感器: 1,
+        门禁读卡器: 1
+      }
     }
   },
   mounted() {
@@ -226,7 +239,7 @@ export default {
       )
       this.camera.position.set(680, 380, 25)
       this.scene = new Three.Scene()
-      this.scene.color = 0xd6e4ec
+      this.scene.color = 0xffffff
       this.raycaster = new Three.Raycaster() // 光线投射器
       this.mouse = new Three.Vector2()
 
@@ -236,7 +249,7 @@ export default {
       light2.position.set(-200, 200, -500)
 
       // A end
-      var ambient = new Three.AmbientLight(0xffffff, 0.6) // AmbientLight,影响整个场景的光源
+      var ambient = new Three.AmbientLight(0xffffff, 0.4) // AmbientLight,影响整个场景的光源
       ambient.position.set(0, 0, 0)
       this.scene.add(ambient, light1, light2)
 
@@ -245,7 +258,7 @@ export default {
       const texture = new Three.TextureLoader().load('/static/floor.jpg')
       texture.wrapS = texture.wrapT = Three.RepeatWrapping
       texture.repeat.set(14, 14)
-      const material = new Three.MeshBasicMaterial() // 参数是一个使用一个或多个属性定义材料外观的对象。
+      const material = new Three.MeshPhongMaterial() // 参数是一个使用一个或多个属性定义材料外观的对象。
       material.map = texture
       this.mesh1 = new Three.Mesh(geometry, material)
       this.mesh1.position.y = -80
@@ -279,10 +292,87 @@ export default {
     creatEl(obj) {
       // 定义立方体
       let addr
-      if (obj === '机架') {
-        addr = '/static/UPS.jpg'
+      let x, y, z
+
+      switch (obj) {
+        case '机架':
+          addr = '/static/UPS2.jpg'
+          x = 50
+          y = 80
+          z = 30
+          break
+        case '数据柜':
+          addr = '/static/数据柜.jpg'
+          x = 50
+          y = 80
+          z = 30
+          break
+
+        case 'UPS标准件':
+          addr = '/static/UPS2.jpg'
+          x = 50
+          y = 80
+          z = 30
+          break
+        case '精密空调':
+          addr = '/static/精密空调.jpg'
+          x = 50
+          y = 80
+          z = 38
+          break
+        case '普通空调':
+          addr = '/static/普通空调.jpg'
+          x = 30
+          y = 30
+          z = 80
+          break
+        case '摄像头球机':
+          addr = '/static/半球机.jpg'
+          x = 12
+          y = 12
+          z = 12
+          break
+        case '配电柜':
+          addr = '/static/配电柜.jpg'
+          x = 50
+          y = 76
+          z = 40
+          break
+        case '配电箱':
+          addr = '/static/配电箱.jpg'
+          x = 50
+          y = 76
+          z = 40
+          break
+        case '温湿度传感器':
+          addr = '/static/温湿度.png'
+          x = 14
+          y = 14
+          z = 14
+          break
+        case '漏水控制器':
+          addr = '/static/漏水控制器.jpg'
+          x = 14
+          y = 14
+          z = 14
+          break
+        case '烟感传感器':
+          addr = '/static/烟感.png'
+          x = 14
+          y = 14
+          z = 14
+          break
+        case '门禁读卡器':
+          addr = '/static/门禁读卡器.png'
+          x = 14
+          y = 14
+          z = 14
+          break
+
+        default:
+          break
       }
-      const Obj = new Three.BoxGeometry(50, 80, 30) // 长方体模型
+      const Obj = new Three.BoxGeometry(x, y, z) // 长方体模型
       const Obj_material = new Three.MeshBasicMaterial({
         map: new Three.TextureLoader().load(addr)
       })
@@ -294,7 +384,7 @@ export default {
         sphereY: 0,
         sphereZ: 0
       }
-      var sphereFolder = this.datGui.addFolder('' + obj + this.obj_arry[0])
+      var sphereFolder = this.datGui.addFolder('' + obj + this.obj_arry[obj])
       sphereFolder.add(gui, 'sphereX', -300, 300).onChange(function(e) {
         Obj_mesh.position.x = e
       })
@@ -304,7 +394,7 @@ export default {
       sphereFolder.add(gui, 'sphereZ', -300, 300).onChange(function(e) {
         Obj_mesh.position.z = e
       })
-      this.obj_arry[0]++
+      this.obj_arry[obj]++
     }
   }
 }
