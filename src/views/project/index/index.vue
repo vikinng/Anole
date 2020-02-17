@@ -14,7 +14,7 @@
       </el-col>
       <el-col :xs="24" :sm="24" :lg="6">
         <div class="Box" @click="linkTo('/workspace/canvasDemo')" @mouseenter="cont_class2='cont_text_hover'">
-          <div class="cont_img">
+          <div class="cont_img" @mouseenter="show2=true">
             <canvasDemo v-if="show2"></canvasDemo>
           </div>
           <div :class="cont_class2">
@@ -59,15 +59,7 @@
         </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="6">
-        <div class="Box" @click="linkTo('/workspace/dataView')" @mouseenter="cont_class5='cont_text_hover'">
-          <div class="cont_img" @mouseenter="show6=true">
-            <dataView v-if="show6"></dataView>
-          </div>
-          <div :class="cont_class6">
-            <span class="cont_title">数据可视化</span>
-            <span class="cont_info">2019/10/26</span>
-          </div>
-        </div>
+        <div class="Box">222</div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="6">
         <div class="Box">222</div>
@@ -116,11 +108,6 @@ const map3d = Vue.component('map3d', function(resolve) {
     require(['../map3d'], resolve)
   }, 100)
 })
-const dataView = Vue.component('dataView', function(resolve) {
-  setTimeout(function() {
-    require(['../dataView'], resolve)
-  }, 100)
-})
 export default {
   name: 'Content',
   components: {
@@ -128,8 +115,7 @@ export default {
     canvasDemo,
     threeDemo,
     Sudoku,
-    map3d,
-    dataView
+    map3d
   },
   data() {
     return {
@@ -138,13 +124,11 @@ export default {
       cont_class3: 'cont_text',
       cont_class4: 'cont_text',
       cont_class5: 'cont_text',
-      cont_class6: 'cont_text',
       show1: false,
       show2: false,
       show3: false,
       show4: false,
-      show5: false,
-      show6: false
+      show5: false
     }
   },
   methods: {

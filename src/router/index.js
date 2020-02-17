@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Layout from '@/views/layout/Layout'
 
 Vue.use(Router)
-
+/* eslint-disable */
 export const myRouterMap = [
   {
     path: '',
@@ -63,15 +63,10 @@ export const myRouterMap = [
         name: 'map3d',
         meta: { title: 'map3d', icon: 'dashboard', noCache: true }
       }, {
-        path: 'dataView',
-        component: () => import('@/views/project/dataView'),
-        name: 'dataView',
-        meta: { title: 'dataView', icon: 'dashboard', noCache: true }
-      }, {
-        path: 'largeMap',
-        component: () => import('@/views/project/dataView/largeMap'),
-        name: 'largeMap',
-        meta: { title: 'lagrgeMap', icon: 'dashboard', noCache: true }
+        path: 'hub_3d',
+        component: () => import('@/views/project/hub3d'),
+        name: 'hub_3d',
+        meta: { title: 'hub_3d', icon: 'dashboard', noCache: true }
       }
     ]
   }

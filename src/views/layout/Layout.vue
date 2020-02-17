@@ -1,6 +1,6 @@
 <template>
   <div class="app_wrapper">
-    <navbar v-if="show"></navbar>
+    <navbar></navbar>
     <div class="box_wrapper">
       <AppMain></AppMain>
     </div>
@@ -12,21 +12,9 @@ import Navbar from './Navbar'
 import AppMain from './AppMain'
 export default {
   name: 'layout',
-  data() {
-    return {
-      show: true
-    }
-  },
   components: {
     Navbar,
     AppMain
-  },
-  created() {
-    if (this.$route.path === '/workspace/largeMap') {
-      this.show = false
-    } else {
-      this.show = true
-    }
   }
 }
 </script>
@@ -39,14 +27,14 @@ export default {
   overflow: hidden;
 }
 .box_wrapper {
-  height: 100vh;
+  height: 89vh;
   overflow: auto;
-  padding-bottom: 0;
+  padding-bottom: 18px;
   background: #f4f4f4;
 }
 .box_wrapper::-webkit-scrollbar {
-  width: 4px;
-  height: 8px;
+  width: 8px;
+  height: 9px;
   background-color: #f2f2f2;
 }
 .box_wrapper::-webkit-scrollbar-thumb {
