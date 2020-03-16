@@ -15,7 +15,7 @@
             </el-row>
             <el-row>
               <el-col :xs="12" :sm="12" :lg="12">
-                <div @click="creatEl('漏水绳')">漏水绳</div>
+                <div>墙</div>
               </el-col>
               <el-col :xs="12" :sm="12" :lg="12">
                 <div class="add_obj" @click="creatEl('窗户')">
@@ -177,7 +177,6 @@ export default {
       objects: [],
       groupData: [],
       obj_index: {
-        漏水绳: 1,
         窗户: 1,
         机架: 1,
         数据柜: 1,
@@ -197,17 +196,16 @@ export default {
       raycaster: '',
       mouse: '',
       pointsArray: [],
-      window_mouse: true,
-      texture2: '',
-      point_arry: []
+      window_mouse: true
     }
   },
   mounted() {
     this.init()
     // this.loadScene()
     this.animate()
-    // let container = document.getElementById('hub_box')
-    // container.addEventListener('mousedown', this.onMouseDown, false)
+    let container = document.getElementById('hub_box')
+    container.addEventListener('mousedown', this.onMouseDown, false)
+    window.addEventListener('keydown', this.onKeyDown, false)
   },
   methods: {
     loadScene() {
@@ -291,37 +289,6 @@ export default {
 
       this.scene.add(this.transformControls)
 
-      var curve = new Three.CatmullRomCurve3(
-        [
-          new Three.Vector3(-80, -40, 0),
-          new Three.Vector3(-70, 40, 0),
-          new Three.Vector3(70, 40, 0),
-          new Three.Vector3(80, -40, 0)
-        ],
-        false
-      )
-      var tubeGeometry = new Three.TubeGeometry(curve, 100, 0.6, 50, false)
-      var textureLoader = new Three.TextureLoader()
-      this.texture2 = textureLoader.load('/static/run.jpg')
-      this.texture2.wrapS = Three.RepeatWrapping
-      this.texture2.wrapT = Three.RepeatWrapping
-      this.texture2.repeat.x = 20
-      var tubeMaterial = new Three.MeshPhongMaterial({
-        map: this.texture2,
-        transparent: true
-      })
-      var tube = new Three.Mesh(tubeGeometry, tubeMaterial)
-      this.scene.add(tube)
-
-      var tubeGeometry2 = new Three.TubeGeometry(curve, 200, 2, 50, false)
-      var tubeMaterial2 = new Three.MeshPhongMaterial({
-        color: 0x4488ff,
-        transparent: true,
-        opacity: 0.3
-      })
-      var tube2 = new Three.Mesh(tubeGeometry2, tubeMaterial2)
-      this.scene.add(tube2)
-
       this.orbitControls = new OrbitControls(
         this.camera,
         this.renderer.domElement
@@ -343,10 +310,150 @@ export default {
       this.mouse = new Three.Vector2()
       contain.appendChild(this.renderer.domElement)
     },
+    onMouseMove(event) {
+      var intersects = this.getIntersects(event)
+
+      /* 鼠标左键未点击时线段的移动状态 */
+      if (this.scene.getObjectByName('line_move')) {
+        this.scene.remove(this.scene.getObjectByName('line_move'))
+      }
+      /* 创建线段 */
+      var lineGeometry = new Three.Geometry()
+      var lineMaterial = new Three.LineBasicMaterial({ color: 0xff9800 })
+
+      if (this.pointsArray.length > 0) {
+        lineGeometry.vertices.push(this.pointsArray[0].geometry.vertices[0])
+
+        var mouseVector3 = new Three.Vector3(intersects.x, 0, intersects.z)
+
+        lineGeometry.vertices.push(mouseVector3)
+
+        var line = new Three.Line(lineGeometry, lineMaterial)
+        line.name = 'line_move'
+
+        this.scene.add(line)
+      }
+    },
+
+    getIntersects(event) {
+      let contain = document.getElementById('hub_box')
+      var normal = new Three.Vector3(0, 1, 0)
+      /* 创建平面 */
+      var planeGround = new Three.Plane(normal, 0)
+
+      this.mouse.x =
+        ((event.clientX - contain.getBoundingClientRect().left) /
+          contain.offsetWidth) *
+          2 -
+        1
+      this.mouse.y =
+        -(
+          (event.clientY - contain.getBoundingClientRect().top) /
+          contain.offsetHeight
+        ) *
+          2 +
+        1
+      this.raycaster.setFromCamera(this.mouse, this.camera)
+
+      var ray = this.raycaster.ray
+
+      var intersects = ray.intersectPlane(planeGround)
+      return intersects
+    },
+
+    onMouseDown(event) {
+      let container = document.getElementById('hub_box')
+      var intersects = this.getIntersects(event)
+
+      /* 鼠标左键按下时，创建点和线段 */
+      if (event.button === 0) {
+        if (!this.window_mouse) {
+          container.addEventListener('mousemove', this.onMouseMove, false)
+          /* 依据 windwo_mouse 标识避免事件的重复添加 */
+          this.window_mouse = true
+        }
+
+        var pointsGeometry = new Three.Geometry()
+        pointsGeometry.vertices.push(intersects)
+
+        var pointsMaterial = new Three.PointsMaterial({
+          color: 0xff0000,
+          size: 3
+        })
+        var points = new Three.Points(pointsGeometry, pointsMaterial)
+
+        this.pointsArray.push(points)
+
+        /* 创建线段 */
+        var lineGeometry = new Three.Geometry()
+        var lineMaterial = new Three.LineBasicMaterial({ color: 0xff9800 })
+
+        if (this.pointsArray.length >= 2) {
+          lineGeometry.vertices.push(
+            this.pointsArray[0].geometry.vertices[0],
+            this.pointsArray[1].geometry.vertices[0]
+          )
+
+          var line = new Three.Line(lineGeometry, lineMaterial)
+          this.pointsArray.shift()
+          this.scene.add(line)
+        }
+
+        this.scene.add(points)
+      }
+
+      /* 鼠标右键按下时 回退到上一步的点，并中断绘制 */
+      if (event.button === 2) {
+        container.addEventListener('mousemove', this.onMouseMove, false)
+        /* 移除事件之后，要设置为 false 为了避免事件的重复添加 */
+        this.window_mouse = false
+
+        /* 鼠标左键未点击时线段的移动状态 */
+        if (this.scene.getObjectByName('line_move')) {
+          this.scene.remove(this.scene.getObjectByName('line_move'))
+
+          /* 删除数组中的元素，否则的话再次重绘会链接之前的点接着重绘 */
+          this.pointsArray.shift()
+        }
+      }
+    },
+    onKeyDown(event) {
+      console.log('aaa')
+      let container = document.getElementById('hub_box')
+      if (event.key === 'Escape' || event.key === 'Delete') {
+        container.removeEventListener('mousemove', this.onMouseMove, false)
+
+        this.window_mouse = false
+        console.log(this.scene)
+        console.log(this.scene.getObjectByName('line_move'))
+        /* 鼠标左键未点击时线段的移动状态 */
+        if (this.scene.getObjectByName('line_move')) {
+          this.scene.remove(this.scene.getObjectByName('line_move'))
+
+          /* 删除数组中的元素，否则的话再次重绘会链接之前的点接着重绘 */
+          this.pointsArray.shift()
+        }
+
+        var length = this.scene.children.length - 1
+        /* 按步骤移除点和先 */
+        if (
+          this.scene.children[length].isLine ||
+          this.scene.children[length].isPoints
+        ) {
+          this.scene.children.pop()
+          length = this.scene.children.length - 1
+
+          /* 若最后一项不是线段或者点就不移除 */
+          if (!this.scene.children[length].isMesh) {
+            this.scene.children.pop()
+          }
+        }
+      }
+    },
+
     animate() {
       this.Timer = requestAnimationFrame(this.animate)
       this.renderer.render(this.scene, this.camera)
-      this.texture2.offset.x -= 0.06
     },
     creatEl(obj) {
       // 定义立方体
@@ -354,10 +461,6 @@ export default {
       let x, y, z
 
       switch (obj) {
-        case '漏水绳':
-          let container = document.getElementById('hub_box')
-          container.addEventListener('mousedown', this.onMouseDown, false)
-          break
         case '机架':
           addr = '/static/UPS2.jpg'
           x = 50
@@ -454,96 +557,6 @@ export default {
     changeObj(index) {
       this.transformControls.attach(this.obj_arry[index])
       this.i = index
-    },
-    onMouseMove(event) {
-      var intersects = this.getIntersects(event)
-
-      /* 鼠标左键未点击时线段的移动状态 */
-      if (this.scene.getObjectByName('line_move')) {
-        this.scene.remove(this.scene.getObjectByName('line_move'))
-      }
-      /* 创建线段 */
-      var lineGeometry = new Three.Geometry()
-      var lineMaterial = new Three.LineBasicMaterial({ color: 0xff9800 })
-
-      if (this.pointsArray.length > 0) {
-        lineGeometry.vertices.push(this.pointsArray[0].geometry.vertices[0])
-
-        var mouseVector3 = new Three.Vector3(intersects.x, 0, intersects.z)
-
-        lineGeometry.vertices.push(mouseVector3)
-
-        var line = new Three.Line(lineGeometry, lineMaterial)
-        line.name = 'line_move'
-
-        this.scene.add(line)
-      }
-    },
-
-    getIntersects(event) {
-      let contain = document.getElementById('hub_box')
-      var normal = new Three.Vector3(0, 1, 0)
-      /* 创建平面 */
-      var planeGround = new Three.Plane(normal, 0)
-
-      this.mouse.x =
-        ((event.clientX - contain.getBoundingClientRect().left) /
-          contain.offsetWidth) *
-          2 -
-        1
-      this.mouse.y =
-        -(
-          (event.clientY - contain.getBoundingClientRect().top) /
-          contain.offsetHeight
-        ) *
-          2 +
-        1
-      this.raycaster.setFromCamera(this.mouse, this.camera)
-
-      var ray = this.raycaster.ray
-
-      var intersects = ray.intersectPlane(planeGround)
-      return intersects
-    },
-
-    onMouseDown(event) {
-      let container = document.getElementById('hub_box')
-      var intersects = this.getIntersects(event)
-
-      console.log(intersects)
-      /* 鼠标左键按下时，创建点和线段 */
-      if (event.button === 0) {
-        console.log(new Three.Vector3(-80, -40, 0))
-        this.point_arry.push(intersects)
-      }
-
-      /* 鼠标右键按下时 回退到上一步的点，并中断绘制 */
-      if (event.button === 2) {
-        console.log(this.point_arry)
-        if (this.point_arry.length > 1) {
-          var curve = new Three.CatmullRomCurve3(this.point_arry, false)
-          var tubeGeometry = new Three.TubeGeometry(curve, 200, 2, 50, false)
-          var tubeMaterial = new Three.MeshPhongMaterial({
-            color: 0x4488ff,
-            transparent: true,
-            opacity: 0.3
-          })
-          var tube = new Three.Mesh(tubeGeometry, tubeMaterial)
-          console.log('成功')
-          this.scene.add(tube)
-
-          this.point_arry = []
-          container.removeEventListener('mousedown', this.onMouseDown, false)
-        }
-      }
-    },
-    onKeyDown(event) {
-      console.log('aaa')
-      let container = document.getElementById('hub_box')
-      if (event.key === 'Escape' || event.key === 'Delete') {
-        container.removeEventListener('mousemove', this.onMouseMove, false)
-        this.window_mouse = false
-      }
     }
   }
 }

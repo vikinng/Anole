@@ -15,13 +15,10 @@
             </el-row>
             <el-row>
               <el-col :xs="12" :sm="12" :lg="12">
-                <div @click="creatEl('漏水绳')">漏水绳</div>
+                <div>墙</div>
               </el-col>
               <el-col :xs="12" :sm="12" :lg="12">
-                <div class="add_obj" @click="creatEl('窗户')">
-                  <img style="width:37px;" src="/static/窗户.jpg">
-                  <div>窗户</div>
-                </div>
+                <div>窗</div>
               </el-col>
             </el-row>
           </el-collapse-item>
@@ -146,9 +143,7 @@
         </el-row>
         <div id="hub_box"></div>
       </el-col>
-      <el-col :xs="3" :sm="3" :lg="3">
-        <div :class="{selObj:i===index}" @click="changeObj(index)" v-for="(item,index ) in obj_arry" :key="item.uuid">{{item.name}}</div>
-      </el-col>
+      <el-col :xs="3" :sm="3" :lg="3"></el-col>
     </el-row>
   </div>
 </template>
@@ -156,8 +151,7 @@
 <script>
 import * as Three from 'three'
 import OrbitControls from 'three-orbitcontrols'
-import TransformControls from 'three-transformcontrols'
-
+import * as dat from 'dat.gui'
 export default {
   name: 'Hub3D',
   data() {
@@ -173,12 +167,11 @@ export default {
       angle: 0,
       clock: '',
       orbitControls: '',
-      transformControls: '',
+      raycaster: '',
       objects: [],
       groupData: [],
-      obj_index: {
-        漏水绳: 1,
-        窗户: 1,
+      datGui: '',
+      obj_arry: {
         机架: 1,
         数据柜: 1,
         UPS标准件: 1,
@@ -191,23 +184,13 @@ export default {
         漏水控制器: 1,
         烟感传感器: 1,
         门禁读卡器: 1
-      },
-      obj_arry: [],
-      i: 0,
-      raycaster: '',
-      mouse: '',
-      pointsArray: [],
-      window_mouse: true,
-      texture2: '',
-      point_arry: []
+      }
     }
   },
   mounted() {
     this.init()
     // this.loadScene()
     this.animate()
-    // let container = document.getElementById('hub_box')
-    // container.addEventListener('mousedown', this.onMouseDown, false)
   },
   methods: {
     loadScene() {
@@ -283,70 +266,28 @@ export default {
 
       this.renderer = new Three.WebGLRenderer({ antialias: true, alpha: true })
       this.renderer.setSize(contain.clientWidth, contain.clientHeight)
-
-      this.transformControls = new TransformControls(
-        this.camera,
-        this.renderer.domElement
-      )
-
-      this.scene.add(this.transformControls)
-
-      var curve = new Three.CatmullRomCurve3(
-        [
-          new Three.Vector3(-80, -40, 0),
-          new Three.Vector3(-70, 40, 0),
-          new Three.Vector3(70, 40, 0),
-          new Three.Vector3(80, -40, 0)
-        ],
-        false
-      )
-      var tubeGeometry = new Three.TubeGeometry(curve, 100, 0.6, 50, false)
-      var textureLoader = new Three.TextureLoader()
-      this.texture2 = textureLoader.load('/static/run.jpg')
-      this.texture2.wrapS = Three.RepeatWrapping
-      this.texture2.wrapT = Three.RepeatWrapping
-      this.texture2.repeat.x = 20
-      var tubeMaterial = new Three.MeshPhongMaterial({
-        map: this.texture2,
-        transparent: true
-      })
-      var tube = new Three.Mesh(tubeGeometry, tubeMaterial)
-      this.scene.add(tube)
-
-      var tubeGeometry2 = new Three.TubeGeometry(curve, 200, 2, 50, false)
-      var tubeMaterial2 = new Three.MeshPhongMaterial({
-        color: 0x4488ff,
-        transparent: true,
-        opacity: 0.3
-      })
-      var tube2 = new Three.Mesh(tubeGeometry2, tubeMaterial2)
-      this.scene.add(tube2)
-
       this.orbitControls = new OrbitControls(
         this.camera,
         this.renderer.domElement
       )
-
       this.orbitControls.target = new Three.Vector3(0, 0, 0)
       this.orbitControls.autoRotate = false // 将自动旋转关闭
       this.clock = new Three.Clock() // 用于更新轨道控制器
 
-      this.transformControls.addEventListener('mouseDown', evt => {
-        // 平移开始时禁用相机控件
-        this.orbitControls.enabled = false
-      })
-      this.transformControls.addEventListener('mouseUp', evt => {
-        // 平移结束时启用相机控件
-        this.orbitControls.enabled = true
-      })
-      this.raycaster = new Three.Raycaster()
-      this.mouse = new Three.Vector2()
+      this.datGui = new dat.GUI()
+      const gui = {
+        sphereX: 100,
+        sphereY: 80,
+        sphereZ: 0
+      }
+      this.datGui.add(gui, 'sphereX', 0, 1)
+      this.datGui.add(gui, 'sphereY', 0, 1)
+
       contain.appendChild(this.renderer.domElement)
     },
     animate() {
       this.Timer = requestAnimationFrame(this.animate)
       this.renderer.render(this.scene, this.camera)
-      this.texture2.offset.x -= 0.06
     },
     creatEl(obj) {
       // 定义立方体
@@ -354,10 +295,6 @@ export default {
       let x, y, z
 
       switch (obj) {
-        case '漏水绳':
-          let container = document.getElementById('hub_box')
-          container.addEventListener('mousedown', this.onMouseDown, false)
-          break
         case '机架':
           addr = '/static/UPS2.jpg'
           x = 50
@@ -440,110 +377,24 @@ export default {
         map: new Three.TextureLoader().load(addr)
       })
       const Obj_mesh = new Three.Mesh(Obj, Obj_material)
-      Obj_mesh.name = obj + this.obj_index[obj]
+
       this.scene.add(Obj_mesh)
-      this.obj_arry.push(Obj_mesh)
-      console.log(this.obj_arry)
-      this.transformControls.attach(Obj_mesh)
-      this.transformControls.addEventListener('change', evt => {
-        console.log('aaa')
-        console.log(Obj_mesh.position.z)
+      const gui = {
+        sphereX: 100,
+        sphereY: 0,
+        sphereZ: 0
+      }
+      var sphereFolder = this.datGui.addFolder('' + obj + this.obj_arry[obj])
+      sphereFolder.add(gui, 'sphereX', -300, 300).onChange(function(e) {
+        Obj_mesh.position.x = e
       })
-      this.obj_index[obj]++
-    },
-    changeObj(index) {
-      this.transformControls.attach(this.obj_arry[index])
-      this.i = index
-    },
-    onMouseMove(event) {
-      var intersects = this.getIntersects(event)
-
-      /* 鼠标左键未点击时线段的移动状态 */
-      if (this.scene.getObjectByName('line_move')) {
-        this.scene.remove(this.scene.getObjectByName('line_move'))
-      }
-      /* 创建线段 */
-      var lineGeometry = new Three.Geometry()
-      var lineMaterial = new Three.LineBasicMaterial({ color: 0xff9800 })
-
-      if (this.pointsArray.length > 0) {
-        lineGeometry.vertices.push(this.pointsArray[0].geometry.vertices[0])
-
-        var mouseVector3 = new Three.Vector3(intersects.x, 0, intersects.z)
-
-        lineGeometry.vertices.push(mouseVector3)
-
-        var line = new Three.Line(lineGeometry, lineMaterial)
-        line.name = 'line_move'
-
-        this.scene.add(line)
-      }
-    },
-
-    getIntersects(event) {
-      let contain = document.getElementById('hub_box')
-      var normal = new Three.Vector3(0, 1, 0)
-      /* 创建平面 */
-      var planeGround = new Three.Plane(normal, 0)
-
-      this.mouse.x =
-        ((event.clientX - contain.getBoundingClientRect().left) /
-          contain.offsetWidth) *
-          2 -
-        1
-      this.mouse.y =
-        -(
-          (event.clientY - contain.getBoundingClientRect().top) /
-          contain.offsetHeight
-        ) *
-          2 +
-        1
-      this.raycaster.setFromCamera(this.mouse, this.camera)
-
-      var ray = this.raycaster.ray
-
-      var intersects = ray.intersectPlane(planeGround)
-      return intersects
-    },
-
-    onMouseDown(event) {
-      let container = document.getElementById('hub_box')
-      var intersects = this.getIntersects(event)
-
-      console.log(intersects)
-      /* 鼠标左键按下时，创建点和线段 */
-      if (event.button === 0) {
-        console.log(new Three.Vector3(-80, -40, 0))
-        this.point_arry.push(intersects)
-      }
-
-      /* 鼠标右键按下时 回退到上一步的点，并中断绘制 */
-      if (event.button === 2) {
-        console.log(this.point_arry)
-        if (this.point_arry.length > 1) {
-          var curve = new Three.CatmullRomCurve3(this.point_arry, false)
-          var tubeGeometry = new Three.TubeGeometry(curve, 200, 2, 50, false)
-          var tubeMaterial = new Three.MeshPhongMaterial({
-            color: 0x4488ff,
-            transparent: true,
-            opacity: 0.3
-          })
-          var tube = new Three.Mesh(tubeGeometry, tubeMaterial)
-          console.log('成功')
-          this.scene.add(tube)
-
-          this.point_arry = []
-          container.removeEventListener('mousedown', this.onMouseDown, false)
-        }
-      }
-    },
-    onKeyDown(event) {
-      console.log('aaa')
-      let container = document.getElementById('hub_box')
-      if (event.key === 'Escape' || event.key === 'Delete') {
-        container.removeEventListener('mousemove', this.onMouseMove, false)
-        this.window_mouse = false
-      }
+      sphereFolder.add(gui, 'sphereY', -300, 300).onChange(function(e) {
+        Obj_mesh.position.y = e
+      })
+      sphereFolder.add(gui, 'sphereZ', -300, 300).onChange(function(e) {
+        Obj_mesh.position.z = e
+      })
+      this.obj_arry[obj]++
     }
   }
 }
@@ -566,11 +417,5 @@ export default {
 }
 .add_obj {
   cursor: pointer;
-}
-.selObj {
-  width: 100%;
-  background: rgb(109, 107, 107);
-  cursor: pointer;
-  color: #fff;
 }
 </style>
