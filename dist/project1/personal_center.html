@@ -118,29 +118,24 @@
             color: #60c5b3;
         }
 
-        .common-box {
-            margin-top: 12px;
-            border-radius: 5px;
-        }
-
-        .common-box-header {
+        .personal-table {
             width: 100%;
-            height: 32px;
-            background: #d6eace;
-            color: #3c763c;
-            line-height: 32px;
-            padding-left: 6px;
-            font-size: 15px;
-        }
-
-        .common-box-body {
-            width: 100%;
-            height: 110px;
+            height: 240px;
             background: #fff;
+            margin-top: 30px;
         }
+        .personal-table-tr{
+            width: 100%;
+            height: 120px;
 
-        .clickable {
-            cursor: pointer;
+        }
+        .personal-table-td{
+            width: 33%;
+            height: 120px;
+            font-size: 12px;
+            border: 1px solid rgb(231, 228, 228);
+            text-align: center;   
+
         }
     </style>
 </head>
@@ -169,85 +164,6 @@
             </ul>
         </div>
         <div class="console-body">
-            <div>
-                <img src="./img/join_cn.png" width="100%" height="126">
-            </div>
-            <div class="notice-text">
-                多账号操作刷收益等行为，严重影响市场的健康发展，一经发现一律永久封禁处理；对于有投资资产未收回的，可以联系所属公会管理为其反馈申请。
-            </div>
-            <div style="padding: 0 28px;font-family: Microsoft YaHei; ">
-                <div class="row">
-                    <div class="col-xs-4 col-sm-4 col-md-1 col-lg-1"
-                        style="text-align: center;margin-top: 6px;padding:6px 22px;">
-                        <div class='clickable' onclick="toPersonal()">
-                            <img src="./img/3.png" style="border-radius:50px;" width="100%">
-                            <span>个人中心</span>
-                        </div>
-
-                    </div>
-                    <div class="col-xs-4 col-sm-4 col-md-1 col-lg-1"
-                        style="text-align: center;margin-top: 6px;padding:6px 22px;">
-                        <div class='clickable' onclick="toMall()">
-                            <img src="./img/2.png" style="border-radius:50px;" width="100%">
-                            <span>矿机商城</span></div>
-
-                    </div>
-                    <div class="col-xs-4 col-sm-4 col-md-1 col-lg-1"
-                        style="text-align: center;margin-top: 6px;padding:6px 22px;">
-                        <div class='clickable' onclick="toTrade()">
-                            <img src="./img/7.png" style="border-radius:50px;" width="100%">
-                            <span>交易中心</span>
-                        </div>
-
-
-                    </div>
-                    <div class="col-xs-4 col-sm-4 col-md-1 col-lg-1"
-                        style="text-align: center;margin-top: 6px;padding:6px 22px;">
-                        <div class='clickable' onclick="toShare()">
-                            <img src="./img/8.png" style="border-radius:50px;" width="100%">
-                            <span class='clickable' onclick="toShare()">环保之路</span>
-                        </div>
-
-
-
-
-                    </div>
-                    <div class="col-xs-4 col-sm-4 col-md-1 col-lg-1"
-                        style="text-align: center;margin-top: 6px;padding:6px 22px;">
-                        <img src="./img/4.png" style="border-radius:50px;" width="100%">
-                        我的公会
-                    </div>
-
-                    <div class="col-xs-4 col-sm-4 col-md-1 col-lg-1"
-                        style="text-align: center;margin-top: 6px;padding:6px 22px;">
-                        <div class='clickable' onclick="toNotice()">
-                            <img src="./img/6.png" style="border-radius:50px;" width="100%">
-                            <span>公会招募</span>
-
-                        </div>
-                    </div>
-
-                    <div class="col-xs-4 col-sm-4 col-md-1 col-lg-1"
-                        style="text-align: center;margin-top: 6px;padding:6px 22px;">
-                        <img src="./img/1.png" style="border-radius:50px;" width="100%">
-                        创业之路
-                    </div>
-
-                    <div class="col-xs-4 col-sm-4 col-md-1 col-lg-1"
-                        style="text-align: center;margin-top: 6px;padding:6px 22px;">
-                        <img src="./img/9.png" style="border-radius:50px;" width="100%">
-                        绿色商城
-                    </div>
-
-                    <div class="col-xs-4 col-sm-4 col-md-1 col-lg-1"
-                        style="text-align: center;margin-top: 6px;padding:6px 22px;">
-                        <img src="./img/5.png" style="border-radius:50px;" width="100%">
-                        留言咨询
-                    </div>
-
-
-                </div>
-            </div>
             <div class="user-table">
                 <div class="user-table-header">
                     <span class="glyphicon glyphicon-user"></span>
@@ -340,18 +256,46 @@
                     </table>
                 </div>
             </div>
-            <div class="common-box">
-                <div class="common-box-header">
-                    所属工会
-                </div>
-                <div class="common-box-body">
-                    <div style="width: 130px;position: relative;margin:0 auto;;">
-                        <button type="button" style="width: 130px;margin-top:10px"
-                            class="btn btn-primary ">公会系统升级中</button>
-                    </div>
-                </div>
+
+            <div class="personal-table">
+                <table style="width: 100%;">
+                    <tr class="personal-table-tr">
+                        <td class="personal-table-td">
+                            <img src="./img/我的矿机.svg" width="30">
+                           <div style="margin-top: 5px;">我的矿机</div> 
+                        </td>
+                        <td class="personal-table-td">
+                            <img src="./img/我的交易.svg" width="30">
+                           <div style="margin-top: 5px;">我的交易</div> 
+                        </td>
+                        <td class="personal-table-td">
+                            <img src="./img/财务明细.svg" width="30">
+                           <div style="margin-top: 5px;">财务明细</div> 
+                        </td>
+                       
+                    </tr>
+                    <tr class="personal-table-tr">
+                        <td class="personal-table-td">
+                            <img src="./img/个人资料.svg" width="30">
+                           <div style="margin-top: 5px;">个人资料</div> 
+                        </td>
+                        <td class="personal-table-td">
+                            <img src="./img/修改密码.svg" width="30">
+                           <div style="margin-top: 5px;">修改密码</div> 
+                        </td>
+                        <td class="personal-table-td">
+                            <img src="./img/新手指南.svg" width="30">
+                           <div style="margin-top: 5px;">新手指南</div> 
+                        </td>
+                       
+                    </tr>
+                </table>
             </div>
         </div>
+
+
+
+
         <div class="console-footer">
             <div class="row">
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -417,5 +361,5 @@
         window.location.href = "./login.html";
     }
 
-
-</script>
+ 
+ </script>

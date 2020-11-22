@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+
+<head>
+
+    <meta name="Description" content="">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <style>
+        .console-content {
+            height: 100vh;
+            margin: 0 auto;
+            overflow: hidden;
+            -webkit-overflow-scrolling: touch;
+
+        }
+
+        .console-header {
+            background: #006a39;
+            height: 52px;
+            padding: 0 12px 0 12px;
+        }
+
+        .menu-icon {
+            float: right;
+            border: 1px solid #fff;
+            border-radius: 6px;
+            margin-top: 6px;
+            padding: 5px 9px;
+        }
+
+        .menu-list {
+            display: none;
+            background: #006a39;
+            padding: 12px;
+            height: 310px;
+        }
+
+        .menu-list ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            font-size: 18px
+        }
+
+        .menu-list ul li {
+            margin-bottom: 8px
+        }
+
+        .console-body {
+            font-family: "Microsoft YaHei";
+            padding: 12px;
+            height: calc(100vh - 100px);
+            overflow-y: auto;
+            background: #daefea;
+        }
+
+        .notice-content {
+            background: #e2f3ed;
+            height: 100%;
+            padding: 50px;
+        }
+
+        .console-footer {
+            width: 100%;
+            height: 50px;
+            padding-top: 6px;
+            text-align: center;
+            color: grey;
+            border-top: 1px solid #dcdddc;
+
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <div class="console-content">
+        <div class="console-header">
+            <div style="float: left;color:#fff;font-size: 18px;line-height: 52px;">CEC</div>
+            <div class="menu-icon clickable" onclick="showMenu()">
+                <img src="./img/menu.svg" width="25">
+            </div>
+        </div>
+        <div id="menu-list" class="menu-list">
+            <ul>
+                <li class='clickable' onclick="toPersonal()">个人中心</li>
+                <li class='clickable' onclick="toMall()">矿机商城</li>
+                <li class='clickable' onclick="toTrade()">交易中心</li>
+                <li class='clickable' onclick="toShare()">环保之路</li>
+                <li class='clickable' onclick="toNotice()">公会招募</li>
+                <li>绿色商城</li>
+                <li>帮助中心</li>
+                <li>语言</li>
+                <li class='clickable' onclick="logOut()">退出</li>
+            </ul>
+        </div>
+        <div class="console-body">
+            <div class="notice-content">
+                <img src="./img/notice.jpg" width="100%">
+            </div>
+
+
+        </div>
+
+
+
+
+        <div class="console-footer">
+            <div class="row">
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <img src="./img/矿机商城.svg" width="20">
+                    <div class="clickable" onclick="toMall()">矿机商城</div>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <img src="./img/交易中心.svg" width="20">
+                    <div class="clickable" onclick="toTrade()">交易中心</div>
+
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <img src="./img/个人中心.svg" width="20">
+
+                    <div class="clickable" onclick="toPersonal()">个人中心</div>
+
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <img src="./img/首页.svg" width="20">
+                    <div class="clickable" onclick="toIndel()">首页</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script type="text/javascript" src="./jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="./bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script>
+    function toMall() {
+        window.location.href = "./mall.html";
+    }
+    function toTrade() {
+        window.location.href = "./trade_center.html";
+    }
+    function toPersonal() {
+        window.location.href = "./personal_center.html";
+    }
+    function toIndel() {
+        window.location.href = "./index.html";
+    }
+
+    function toShare() {
+        window.location.href = "./share.html";
+    }
+
+    function toNotice() {
+        window.location.href = "./notice.html";
+    }
+
+    function showMenu() {
+        var menuList = document.getElementById('menu-list')
+        if (menuList.style.display === 'block') {
+            menuList.style.display = "none"
+        } else {
+            menuList.style.display = "block"
+        }
+
+    }
+    function logOut() {
+        window.location.href = "./login.html";
+    }
+
+ 
+ 
+ </script>
