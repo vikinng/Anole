@@ -135,6 +135,7 @@
             font-size: 12px;
             border: 1px solid rgb(231, 228, 228);
             text-align: center;   
+            cursor: pointer;
 
         }
     </style>
@@ -260,26 +261,26 @@
             <div class="personal-table">
                 <table style="width: 100%;">
                     <tr class="personal-table-tr">
-                        <td class="personal-table-td">
+                        <td class="personal-table-td" onclick="linkTo('./my_machine.html')">
                             <img src="./img/我的矿机.svg" width="30">
                            <div style="margin-top: 5px;">我的矿机</div> 
                         </td>
-                        <td class="personal-table-td">
+                        <td class="personal-table-td" onclick="linkTo('./my_trade.html')">
                             <img src="./img/我的交易.svg" width="30">
                            <div style="margin-top: 5px;">我的交易</div> 
                         </td>
-                        <td class="personal-table-td">
+                        <td class="personal-table-td" onclick="linkTo('./financial_details.html')">
                             <img src="./img/财务明细.svg" width="30">
                            <div style="margin-top: 5px;">财务明细</div> 
                         </td>
                        
                     </tr>
                     <tr class="personal-table-tr">
-                        <td class="personal-table-td">
+                        <td class="personal-table-td"  onclick="linkTo('./personal_data.html')">
                             <img src="./img/个人资料.svg" width="30">
                            <div style="margin-top: 5px;">个人资料</div> 
                         </td>
-                        <td class="personal-table-td">
+                        <td class="personal-table-td" onclick="linkTo('./change_password.html')">
                             <img src="./img/修改密码.svg" width="30">
                            <div style="margin-top: 5px;">修改密码</div> 
                         </td>
@@ -359,6 +360,10 @@
     }
     function logOut() {
         window.location.href = "./login.html";
+    }
+    function linkTo(url){
+        window.location.href = url;
+
     }
 
  
